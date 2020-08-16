@@ -25,10 +25,11 @@ But executing it, it asks us for a password.
 ![File](file.png)
 Let's disassemble the file with `gdb` (GNU debugger)  
 
-Before I proceed with that, I prefer assembly lang syntax in intel and not in At&T (which is the default syntax in vanilla gdb). To do that:  
+Before I proceed with that, I prefer assembly lang syntax in intel and not in At&T (which is the default syntax in vanilla gdb). To do that use command `set disassembly-flavor intel`:  
 ![gdb](gdb.png)
 
-now let's disassemble the main function: (Note this is only the first half of the disassembled function)  
+now let's disassemble the main function with the command `disassemble main`:  
+(Note this is only the first half of the disassembled function)  
 ![main](main1.png)
 Now for beginners in rev this might look like just tons of randomness but it is really simple! Lets try to understand what is going on here.  
 the disassembled dump seems to have 3 columns: the first:  
@@ -86,7 +87,7 @@ The command to do this is `x/s <the hex values>`
 
 And thus we got the key: `D4rk_M4tt3R`  
 Now close gdb by entering `q` and run the `start` program:  
-![flag](flag.png)
+![flag](!flag.png)
 
 ### Flag:
 > darkCTF{r3vv1ng_up_my_3ng1n3}
