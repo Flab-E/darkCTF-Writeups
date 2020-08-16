@@ -22,15 +22,15 @@ start: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linke
 
 and so it is an ELF Linux executable file  
 But executing it, it asks us for a password.  
-![File](file.png)
+![File](file.png)  
 Let's disassemble the file with `gdb` (GNU debugger)  
 
 Before I proceed with that, I prefer assembly lang syntax in intel and not in At&T (which is the default syntax in vanilla gdb). To do that use command `set disassembly-flavor intel`:  
-![gdb](gdb.png)
+![gdb](gdb.png)  
 
 now let's disassemble the main function with the command `disassemble main`:  
 (Note this is only the first half of the disassembled function)  
-![main](main1.png)
+![main](main1.png)  
 Now for beginners in rev this might look like just tons of randomness but it is really simple! Lets try to understand what is going on here.  
 the disassembled dump seems to have 3 columns: the first:  
 ```
@@ -58,7 +58,7 @@ get all the hex numbers at the end of each line from main+53 up to main+297, and
 
 
 now if you want to crack the executable file to get the flag too for the purpose of learning I'll do my best explaining that part too  
-![main](main2.png)
+![main](main2.png)  
 
 This here is the second half of the disassembled main dumped.  
 I cannot explain all the process going on here but I'll try my best to explain the general stuff going on here.  
@@ -70,24 +70,24 @@ the next part if your response matches then it loops through the list of numbers
 We need main+407 where our response is compared with the stored password.  
 We need to add breakpoints at main and at the address where our response and password was being compared.  
 let's add a break point at main and at main+407 like this:  
-![break](breakpoints.png)
+![break](breakpoints.png)  
 Now let's run the program within gdb. When you run with the command `run` it stops at the first breakpoint that is at the very start (breakpoint 1).  
 enter the command `continue` to run the program until the next breakpoint, which we have set at main+407 (breakpoint 2).  
 When you enter continue the gdb debugger asks for an input. this is the same input that the program `start` is asking for.  
 You can enter any random input. It does not matter. I have provided `aaa` as our input.  
-![run](run.png)
+![run](run.png)  
 Looking at 2 lines before main+407 we can see that the registers rdi and rsi have been called to. So the values stored in the 2 registers are being compared.  
 let's now dump the information on all the registers at this point, with the command `info registers`.  
-![info](info.png)
+![info](info.png)  
 the registers `rsi` and `rdi` seem to have something stored in them because the second column for the 2 registers is filled with some hex value. Let's see what those values are:  
 The value stored in `rdi` is your input.  
 While the value stored in `rsi` is the PASSWORD!!!  
 The command to do this is `x/s <the hex values>`  
-![dumped](xs.png)
+![dumped](xs.png)  
 
 And thus we got the key: `D4rk_M4tt3R`  
 Now close gdb by entering `q` and run the `start` program:  
-![flag](!flag.png)
+![flag](!flag.png)  
 
 ### Flag:
 > darkCTF{r3vv1ng_up_my_3ng1n3}
