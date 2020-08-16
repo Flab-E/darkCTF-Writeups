@@ -10,11 +10,11 @@ Could you help me start my engine?
 ### Note:
 I have been struggling to learn reversing functions and always found it hard. so here is my attempt at making a writeup as easy as possible for my rev challenge BabyEngine.  
 I might be wrong with terminologies as I only started learning and researching about reversing very recently.  
-Feel free to criticize me and let me know if there are any big mistakes I have made. THANKS A TON!
+Feel free to criticize me and let me know if there are any big mistakes I have made. THANKS A TON!  
 
 
-### Solution:
-Let's look at what file was given to us:
+### Solution:  
+Let's look at what file was given to us:  
 ```
 $ file start
 start: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=cb1454de181asd17abc70j54a41ffd5faj7cdb5d, for GNU/Linux 3.2.0, not stripped
@@ -28,20 +28,20 @@ Let's disassemble the file with `gdb` (GNU debugger)
 Before I proceed with that, I prefer assembly lang syntax in intel and not in At&T (which is the default syntax in vanilla gdb). To do that:  
 ![gdb](gdb.png)
 
-now let's disassemble the main function: (Note this is only the first half of the disassembled function)
+now let's disassemble the main function: (Note this is only the first half of the disassembled function)  
 ![main](main1.png)
 Now for beginners in rev this might look like just tons of randomness but it is really simple! Lets try to understand what is going on here.  
 the disassembled dump seems to have 3 columns: the first:  
 ```
 memory address
 ```
-the second:
+the second:  
 ```
 action performed at the corresponding address
 ```
-and the third:
+and the third:  
 ```
-the registers involved
+the registers involved  
 ```
 
 we can see that from main+53 (the address 0x000000000000121e <+53> for convenience I will refer to them as main + offset_with_respect_to_main, here 53) there is some kind of assignment going on.  
@@ -68,7 +68,7 @@ at main+407 your response is compared with the stored password.
 the next part if your response matches then it loops through the list of numbers and gives the flag, else it exits.  
 We need main+407 where our response is compared with the stored password.  
 We need to add breakpoints at main and at the address where our response and password was being compared.  
-let's add a break point at main and at main+407 like this:
+let's add a break point at main and at main+407 like this:  
 ![break](breakpoints.png)
 Now let's run the program within gdb. When you run with the command `run` it stops at the first breakpoint that is at the very start (breakpoint 1).  
 enter the command `continue` to run the program until the next breakpoint, which we have set at main+407 (breakpoint 2).  
@@ -81,11 +81,11 @@ let's now dump the information on all the registers at this point, with the comm
 the registers `rsi` and `rdi` seem to have something stored in them because the second column for the 2 registers is filled with some hex value. Let's see what those values are:  
 The value stored in `rdi` is your input.  
 While the value stored in `rsi` is the PASSWORD!!!  
-The command to do this is `x/s <the hex values>`
+The command to do this is `x/s <the hex values>`  
 ![dumped](xs.png)
 
 And thus we got the key: `D4rk_M4tt3R`  
-Now close gdb by entering `q` and run the `start` program:
+Now close gdb by entering `q` and run the `start` program:  
 ![flag](!flag.png)
 
 ### Flag:
