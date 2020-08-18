@@ -87,7 +87,7 @@ The command to do this is `x/s <the hex values>`
 
 And thus we got the key: `D4rk_M4tt3R`  
 Now close gdb by entering `q` and run the `start` program:  
-![flag](!flag.png)  
+![flag](flag.png)  
 
 ### Flag:
 > darkCTF{r3vv1ng_up_my_3ng1n3}
