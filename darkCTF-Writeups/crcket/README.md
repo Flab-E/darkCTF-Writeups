@@ -37,7 +37,11 @@ for h in range(2000):
 Replace hex values of width and hight in IHDR chunk data.  
 this should give you the flag  
 
+The initial few bits shouldlook something like this:  
+![Example.png](fixed1.png)
+
+The first dump in the image is that of the challenge png given.  
+And the second is the dump of the fixed png.  
+
 ### Flag:
 > darkCTF{cycl1c_r3dund4ncy_ch3ck}
-
-
